@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- encoding:utf-8 -*-
 
-input = "1 15 12 0 9 9 5 5 8 7 3 14 5 1"
+input = "4 1 15 12 0 9 9 5 5 8 7 3 14 5 12 3"
 
 def redistribute(registers):
     max_n = max(registers)
@@ -13,6 +13,7 @@ def redistribute(registers):
         if i >= len(registers):
             i = 0
         registers[i] += 1
+        i += 1
         max_n -= 1
 
 def run(input):
