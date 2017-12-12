@@ -50,12 +50,22 @@ def get_ring(coord):
     return None
         
 def corner_distance(coord):
-    distance = 0
-    ring = get_ring(coord)
-    while ring is None:
-        distance += 1
-        ring = get_ring(coord + distance)
-    return distance, ring
+    distance_pos = 0
+    ring_pos = get_ring(coord)
+    while ring_pos is None:
+        distance_pos += 1
+        ring_pos = get_ring(coord + distance_pos)
+
+    distance_neg = 0
+    ring_neg = None
+    while ring_neg is None:
+        distance_neg += 1
+        ring_neg = get_ring(coord - distance_neg)
+
+    if distance_pos <= distance_neg:
+        return distance_pos,ring_pos
+    else:
+        return distance_neg,ring_neg
 
 def run(input):
     """
