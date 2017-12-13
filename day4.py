@@ -15,7 +15,6 @@ def is_valid(sentence):
 def valid_count(input):
     input_list = [s for s in input.split('\n') if s]
     count = 0
-    print input_list
     for sentence in input_list:
         if is_valid(sentence):
             count += 1
