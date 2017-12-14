@@ -23,7 +23,8 @@ def run(input):
     lengths = [int(n) for n in input.split(',')]
     current_position = 0
     skip_size = 0
-    return hash(lengths, current_position, skip_size)
+    hash(lengths, current_position, skip_size)
+    return list[0]*list[1]
 
 def hash(lengths, current_position, skip_size):
     for length in lengths:
@@ -31,7 +32,7 @@ def hash(lengths, current_position, skip_size):
         current_position += length + skip_size
         skip_size += 1
 
-    return list[0]*list[1]
+    return current_position, skip_size
 
 def main():
     new_input = raw_input("> ")
