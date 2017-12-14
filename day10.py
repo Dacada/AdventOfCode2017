@@ -8,13 +8,24 @@ def reverse(list, start, length):
     """
     Reverse a slice of the given list in place. The slice is defined by the starting index and the total length. Wrap back to the start if end of list is reached.
     """
-    
+    i = start
+    j = start + length - 1
+    while i < j:
+        modi = i % len(list)
+        modj = j % len(list)
+        tmp = list[modi]
+        list[modi] = list[modj]
+        list[modj] = tmp
+        i += 1
+        j -= 1
 
 def run(input):
     lengths = [int(n) for n in input.split(',')]
     current_position = 0
     skip_size = 0
+    return hash(lengths, current_position, skip_size)
 
+def hash(lengths, current_position, skip_size):
     for length in lengths:
         reverse(list, current_position, length)
         current_position += length + skip_size
@@ -25,10 +36,11 @@ def run(input):
 def main():
     new_input = raw_input("> ")
     if new_input:
+        global list
         list = range(5)
-        run(new_input)
+        print run(new_input)
     else:
-        run(input)
+        print run(input)
 
 if __name__ == '__main__':
     main()
