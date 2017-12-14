@@ -3,13 +3,18 @@
 
 import day10
 
-
+def xor(list):
+    r = list[0]
+    for i in range(1,len(list)):
+        r ^= list[i]
+    return r
 
 def finish_hash(list):
     result = ""
     for i in range(16):
-        dense = xor(list[i*16:(i-1)*16])
-        result += hex(dense&0x100)[3:]
+        dense = xor(list[i*16:(i+1)*16])
+        result += hex(dense|0x100)[3:]
+    return result
 
 def run(input):
     lengths = [ord(c) for c in input.strip()]
@@ -17,7 +22,7 @@ def run(input):
     current_position = 0
     skip_size = 0
     for __ in range(64):
-        current_position,skip_size = hash(lengths, current_position, skip_size)
+        current_position,skip_size = day10.hash(lengths, current_position, skip_size)
     return finish_hash(day10.list)
     
 def main():
