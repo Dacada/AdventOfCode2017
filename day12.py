@@ -18,13 +18,12 @@ class Program(object):
         return self._connects_to(name, set())
 
     def _connects_to(self, name, seen):
-        print name
         if self.name == name:
             return True
         else:
             seen.add(self.name)
             for program in self.connections:
-                if program not in seen:
+                if program.name not in seen:
                     if program._connects_to(name, seen):
                         return True
             return False
@@ -35,16 +34,16 @@ def parse(input):
     for line in input.split('\n'):
         tokens = line.split()
         program = int(tokens[0])
-        connections = [day7.remove_char(t,',') for t in tokens[2:]]
+        connections = [int(day7.remove_char(t,',')) for t in tokens[2:]]
         result[program] = (Program(program), connections)
         
     for program,connections in result.values():
         for connection in connections:
-            program.add_connection(result[program.name][0])
+            program.add_connection(result[connection][0])
 
     for program in result:
         result[program] = result[program][0]
-            
+
     return result
 
 def run(input):
@@ -60,9 +59,9 @@ def main():
     new_input = sys.stdin.read()
     
     if new_input:
-        run(new_input)
+        print run(new_input)
     else:
-        run(input)
+        print run(input)
 
 if __name__ == '__main__':
     main()
