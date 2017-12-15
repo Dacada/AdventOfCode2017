@@ -51,11 +51,15 @@ class Layer(object):
     def __init__(self, range):
         self.range = range
         self.current = 0
+        self.direction = -1
 
     def tick(self):
-        self.current += 1
-        if self.current == self.range:
-            self.current = 0
+        if self.current == 0 or self.current == self.range-1:
+            self.direction = -self.direction
+        self.current += self.direction
+
+    def __repr__(self):
+        return "Layer<current={0}, range={1}>".format(self.current, self.range)
 
 class Firewall(object):
     def __init__(self, definition):
@@ -65,7 +69,7 @@ class Firewall(object):
         self.player_position = 0
 
     def player_caught(self):
-        return self.player_position in self._layers and self._layers[self.player_position] == 0
+        return self.player_position in self._layers and self._layers[self.player_position].current == 0
 
     def get_severity(self):
         return self.player_position * self._layers[self.player_position].range
