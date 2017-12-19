@@ -4,7 +4,7 @@
 input = 'input19.txt'
 
 class Router(object):
-    class __init__(self, grid):
+    def __init__(self, grid):
         self._grid = [[cell for cell in row] for row in grid.split('\n')]
         self.letters = ""
         x = self._grid[0].index('|')
@@ -22,6 +22,15 @@ class Router(object):
         while next is not None:
             self.advance(next)
             next = self.next_direction,()
+
+    def advance(self, direction):
+        newcoords = self._sum_coords(self.coords, self._direction_meanings[direction])
+        self.coords = newcoords
+        self._direction = direction
+
+        c = self._char_at(newcoords)
+        if c != '-' and c != '|' and c != '+':
+            self.letters += c
 
     def next_direction(self):
         if self.ahead(self._direction) == ' ':
