@@ -24,10 +24,51 @@ class Router(object):
             next = self.next_direction,()
 
     def next_direction(self):
-        
+        if self.ahead(self._direction) == ' ':
+            dir = self.turn_left(self._direction)
+            if self.ahead(dir) == ' ':
+                dir = self.turn_right(self._direction)
+                if self.ahead(dir) == ' ':
+                    return None
+                else:
+                    return dir
+            else:
+                return dir
+        else:
+            return self._direction
+
+    def ahead(self, direction):
+        newcoords = self._sum_coords(self.coords, self._direction_meanings[direction])
+        return self._char_at(newcoords)
+
+    def turn_left(self, direction):
+        if direction == 'n':
+            return 'w'
+        elif direction == 'w':
+            return 's'
+        elif direction == 's':
+            return 'e'
+        else:
+            return 'n'
+
+    def turn_right(self, direction):
+        if direction == 'n':
+            return 'e'
+        elif direction == 'e':
+            return 's'
+        elif direction == 's':
+            return 'w'
+        else:
+            return 'n'
+
+    def _sum_coords(self, coord1, coord2):
+        return (coord1[0] + coord2[0], coord1[1] + coord2[1])
+
+    def _char_at(self, coord):
+        return self._grid[coord[1]][coord[0]]
 
 def run(input):
-    router = Router(open(input).read().strip())
+    router = Router(open(input).read())
     router.traverse()
     return router.letters
 
