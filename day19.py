@@ -21,7 +21,7 @@ class Router(object):
         next = self.next_direction()
         while next is not None:
             self.advance(next)
-            next = self.next_direction,()
+            next = self.next_direction()
 
     def advance(self, direction):
         newcoords = self._sum_coords(self.coords, self._direction_meanings[direction])
