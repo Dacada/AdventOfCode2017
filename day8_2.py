@@ -1,27 +1,27 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- encoding:utf-8 -*-
 
 import day8
 
-class RegisterBank(object):
+class RegisterBank(day8.RegisterBank):
     def __init__(self):
-        self._registers = {}
+        super(RegisterBank, self).__init__()
         self._max = 0
 
-    def get(self, register_name):
-        if register_name not in self._registers:
-            self._registers[register_name] = 0
-        return self._registers[register_name]
-
     def set(self, register_name, value):
-        self._registers[register_name] = value
+        super(RegisterBank, self).set(register_name, value)
         if value > self._max:
             self._max = value
 
     def max(self):
         return self._max
 
-day8.RegisterBank = RegisterBank
+class Day(day8.Day):
+    def run(self, program):
+        register_bank = RegisterBank()
+        for instruction in program:
+            instruction.run(register_bank)
+        return register_bank.max()
 
 if __name__ == '__main__':
-    day8.main()
+    Day(8).main()

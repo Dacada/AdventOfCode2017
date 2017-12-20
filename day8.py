@@ -1,9 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- encoding:utf-8 -*-
 
-import sys
-
-input = open('input8.txt').read()
+import base
 
 class RegisterBank(object):
     def __init__(self):
@@ -53,28 +51,19 @@ class Instruction(object):
                 current_value -= self.action_value
             register_bank.set(self.register_name, current_value)
 
-def parse(input):
-    program = []
-    for line in input.split('\n'):
-        if line:
-            program.append(Instruction(line))
-    return program
+class Day(base.Base):
+    def parse(self, input):
+        program = []
+        for line in input.split('\n'):
+            if line:
+                program.append(Instruction(line))
+        return program
 
-def run(input):
-    program = parse(input)
-    register_bank = RegisterBank()
-    for instruction in program:
-        instruction.run(register_bank)
-    return register_bank.max()
-
-def main():
-    sys.stdout.write("> ")
-    new_input = sys.stdin.read()
-
-    if new_input:
-        print run(new_input)
-    else:
-        print run(input)
+    def run(self, program):
+        register_bank = RegisterBank()
+        for instruction in program:
+            instruction.run(register_bank)
+        return register_bank.max()
 
 if __name__ == '__main__':
-    main()
+    Day(8).main()
