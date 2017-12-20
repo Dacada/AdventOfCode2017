@@ -39,10 +39,10 @@ class Base(object):
         with open(filename) as f:
             return f.read()
 
-    def parse(self):
+    def parse(self, input):
         raise NotImplementedError
 
-    def run(self):
+    def run(self, input):
         raise NotImplementedError
 
     def time_start(self):
