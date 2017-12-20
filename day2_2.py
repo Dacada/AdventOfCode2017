@@ -13,17 +13,15 @@ def find_divisible(l):
                     return b,a
     return None,None
 
-def run(input):
-    input_table = [[int(num) for num in row.split() if num] for row in input.split('\n') if row]
-    checksum = 0
+class Day(day2.Day):
+    def run(input):
+        checksum = 0
 
-    for row in input_table:
-        a,b = find_divisible(row)
-        checksum += a/b
+        for row in input_table:
+            a,b = find_divisible(row)
+            checksum += a/b
 
-    return checksum
-
-day2.run = run
+        return checksum
 
 if __name__ == '__main__':
-    day2.main()
+    Day(2).main()
