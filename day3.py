@@ -1,9 +1,8 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- encoding:utf-8 -*-
 
 import math
-
-input = '368078'
+import base
 
 def solve_quadratic_equation(a, b, c):
     """
@@ -67,42 +66,38 @@ def corner_distance(coord):
     else:
         return distance_neg,ring_neg
 
-def run(input):
-    """
-    6 5 4 3 4 5 6
-    5 4 3 2 3 4 5
-    4 3 2 1 2 3 4
-    3 2 1 0 1 2 3
-    4 3 2 1 2 3 4
-    5 4 3 2 3 4 5
-    6 5 4 3 4 5 6
+class Day(base.Base):
+    def parse(self, input):
+        return int(input.strip())
+    def run(self, input):
+        """
+        6 5 4 3 4 5 6
+        5 4 3 2 3 4 5
+        4 3 2 1 2 3 4
+        3 2 1 0 1 2 3
+        4 3 2 1 2 3 4
+        5 4 3 2 3 4 5
+        6 5 4 3 4 5 6
 
-    Asuming input is not 1 or in a diagonal, the steps are the following:
+        Asuming input is not 1 or in a diagonal, the steps are the following:
+        
+        1.- Find the closest diagonal by going backwards and forwards and
+        finding the minimum distance.
 
-    1.- Find the closest diagonal by going backwards and forwards and
-    finding the minimum distance.
+        2.- Get the distance for that diagonal, 2*r where r is the "ring"
+        it's at.
 
-    2.- Get the distance for that diagonal, 2*r where r is the "ring"
-    it's at.
+        3.- Substract the distance between the input and the diagonal from
+        the distance between the diagonal the middle. That's the manhattan
+        distance between the input and the middle.
+        """
+        coord = int(input)
 
-    3.- Substract the distance between the input and the diagonal from
-    the distance between the diagonal the middle. That's the manhattan
-    distance between the input and the middle.
-    """
-    coord = int(input)
-
-    if coord == 1:
-        return 0
-    else:
-        distance,ring = corner_distance(coord)
-        return ring*2 - distance
-
-def main():
-    new_input = raw_input('> ')
-    if new_input:
-        print run(new_input)
-    else:
-        print run(input)
+        if coord == 1:
+            return 0
+        else:
+            distance,ring = corner_distance(coord)
+            return ring*2 - distance
 
 if __name__ == '__main__':
-    main()
+    Day(3).main()

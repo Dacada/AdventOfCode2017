@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- encoding:utf-8 -*-
 
 import day3
@@ -6,13 +6,13 @@ import day3
 class Spiral(object):
     def __init__(self, size):
         self.size = size
-        self._reserved = [[0]*self.size for __ in xrange(self.size)]
+        self._reserved = [[0]*self.size for __ in range(self.size)]
 
     def set(self, x, y, item):
-        self._reserved[self.size/2+y][self.size/2+x] = item
+        self._reserved[self.size//2+y][self.size//2+x] = item
 
     def get(self, x, y):
-        return self._reserved[self.size/2+y][self.size/2+x]
+        return self._reserved[self.size//2+y][self.size//2+x]
 
     def run(self, until):
         x = 0
@@ -54,12 +54,11 @@ class Spiral(object):
 
             count += 1
 
-def run(input):
-    spiral = Spiral(100)
-    spiral.set(0,0,1)
-    return spiral.run(int(input))
-
-day3.run = run
+class Day(day3.Day):
+    def run(self, input):
+        spiral = Spiral(100)
+        spiral.set(0,0,1)
+        return spiral.run(input)
 
 if __name__ == '__main__':
-    day3.main()
+    Day(3).main()
