@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- encoding:utf-8 -*-
 
 import day2
@@ -14,10 +14,10 @@ def find_divisible(l):
     return None,None
 
 class Day(day2.Day):
-    def run(input):
+    def run(self, input):
         checksum = 0
 
-        for row in input_table:
+        for row in input:
             a,b = find_divisible(row)
             checksum += a/b
 
