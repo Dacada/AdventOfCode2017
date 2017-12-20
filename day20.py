@@ -15,6 +15,9 @@ class Coord(object):
             self._total = abs(self.x) + abs(self.y) + abs(self.z)
         return self._total
 
+    def __repr__(self):
+        return "<{0},{1},{2}>".format(self.x, self.y, self.z)
+
 class Particle(object):
     def __init__(self, p, v, a):
         self.p = Coord(*p)
@@ -27,6 +30,9 @@ class Particle(object):
         return self.v.total()
     def total_p(self):
         return self.p.total()
+
+    def __repr__(self):
+        return "p={0}, v={1}, a={2}".format(self.p, self.v, self.a)
 
 class Day(base.Base):
     def parse(self, input):
@@ -48,12 +54,6 @@ class Day(base.Base):
         for particle in input[1:]:
             if particle.total_a() < min_particle.total_a():
                 min_particle = particle
-            elif particle.total_a() == min_particle.total_a():
-                if particle.total_v() < min_particle.total_v():
-                    min_particle = particle
-                elif particle.total_v() == min_particle.total_v():
-                    if particle.total_p() < min_particle.total_p():
-                        min_particle = particle
         return input.index(min_particle)
 
 if __name__ == '__main__':
