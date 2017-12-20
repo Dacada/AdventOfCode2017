@@ -10,7 +10,7 @@ class Day(base.Base):
     def run(self, input):
         checksum = 0
 
-        for row in input_table:
+        for row in input:
             checksum += max(row) - min(row)
 
         return checksum
