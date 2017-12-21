@@ -3,6 +3,9 @@
 
 import base
 
+def empty_matrix(side):
+    return [[None]*side for __ in side]
+
 def to_grid(s):
     return [[c for c in line if c] for line in s.split('/') if line]
 
@@ -22,7 +25,7 @@ def turn90(matrix):
     ab    bd
     cd => ac
     """
-    r = [[None]*len(matrix)]*len(matrix) #ok if they're always squares
+    r = empty_matrix(len(matrix))
     
     if len(matrix) == 2: #I'm
         r[0][0] = matrix[0][1]
@@ -42,6 +45,22 @@ def turn90(matrix):
     # And thinking is hard
     
     return r
+
+def hflip(matrix):
+    r = empty_matrix(len(matrix))
+    for i in range(len(matrix)):
+        r[i][i] = matrix[i][len(matrix) - 1 - i]
+    return r
+
+def vflip(matrix):
+    r = empty_matrix(len(matrix))
+    for i in range(len(matrix)):
+        r[i][i] = matrix[len(matrix) - 1 - i][i]
+    return r
+
+def div_in_2(matrix):
+    result = {}
+    
 
 class Rule():
     def __init__(self, pattern, result):
