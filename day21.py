@@ -14,7 +14,34 @@ def flip_and_turn(grid):
         yield vflip(grid)
 
 def turn90(matrix):
+    """
+    abc    cfi
+    def => beh
+    ghi    adg
+
+    ab    bd
+    cd => ac
+    """
+    r = [[None]*len(matrix)]*len(matrix) #ok if they're always squares
     
+    if len(matrix) == 2: #I'm
+        r[0][0] = matrix[0][1]
+        r[0][1] = matrix[1][1]
+        r[1][0] = matrix[0][0]
+        r[1][1] = matrix[1][0]
+    elif len(matrix) == 3: #Lazy
+        r[0][0] = matrix[0][2]
+        r[0][1] = matrix[1][2]
+        r[0][2] = matrix[2][2]
+        r[1][0] = matrix[0][1]
+        r[1][1] = matrix[1][1]
+        r[1][2] = matrix[2][1]
+        r[2][0] = matrix[0][0]
+        r[2][1] = matrix[1][0]
+        r[2][2] = matrix[2][0]
+    # And thinking is hard
+    
+    return r
 
 class Rule():
     def __init__(self, pattern, result):
