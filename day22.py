@@ -6,7 +6,7 @@ import base
 class InfiniteGrid():
     def __init__(self, initial): # Asume initial is a square
         self._grid = {}
-        zero = len(initial)//2+1
+        zero = len(initial)//2
         for y,row in enumerate(initial):
             for x,cell in enumerate(row):
                 self._grid[(x-zero,y-zero)] = cell
@@ -18,7 +18,7 @@ class InfiniteGrid():
         self._grid[coords] = val
 
     def getstr(self, size, mark):
-        offset = size//2-1
+        offset = size//2
         s = [[' . ']*size for __ in range(size)]
         for coord,cell in self._grid.items():
             if coord == mark:
@@ -58,10 +58,10 @@ class Virus():
     }
 
     _advance = {
-        'n' : (+1, 0),
-        's' : (-1, 0),
-        'w' : (0, -1),
-        'e' : (0, +1)
+        'n' : (0, -1),
+        's' : (0, +1),
+        'w' : (-1, 0),
+        'e' : (+1, 0)
     }
         
     def turn_left(self):
@@ -88,8 +88,8 @@ class Virus():
 
     def burst_times(self, times):
         for __ in range(times):
-            print(self.grid.getstr(11,self.coords))
-            input()
+            #print(self.grid.getstr(11,self.coords))
+            #input()
             self.burst()
 
 class Day(base.Base):
@@ -103,4 +103,4 @@ class Day(base.Base):
         return virus.infection_count
 
 if __name__ == '__main__':
-    Day(22, test=True).main()
+    Day(22).main()
