@@ -11,9 +11,9 @@ class Virus(day22.Virus):
         if self._current_node == '.':
             self.turn_left()
             self._current_node = 'W'
-            self.infection_count += 1
         elif self._current_node == 'W':
             self._current_node = '#'
+            self.infection_count += 1
         elif self._current_node == '#':
             self.turn_right()
             self._current_node = 'F'
@@ -30,8 +30,8 @@ class Day(day22.Day):
         return virus
         
     def run(self, virus):
-        virus.burst_times(100)
+        virus.burst_times(10000000)
         return virus.infection_count
 
 if __name__ == '__main__':
-    Day(22, True).main()
+    Day(22).main()
