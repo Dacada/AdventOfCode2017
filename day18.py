@@ -1,11 +1,10 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- encoding:utf-8 -*-
 
 import sys
 import operator
+import base
 import day8
-
-input = open("input18.txt").read().strip()
 
 class EndProgram(Exception):
     pass
@@ -74,19 +73,13 @@ class Program(object):
 def to_lists(input):
     return [instr.split() for instr in input.split('\n')]
 
-def run(input):
-    program = Program(to_lists(input))
-    program.run()
-    return program.last_snd
+class Day(base.Base):
+    def parse(self, input):
+        return Program(to_lists(input))
 
-def main():
-    sys.stdout.write("> ")
-    new_input = sys.stdin.read()
-
-    if new_input:
-        print run(new_input)
-    else:
-        print run(input)
+    def run(self, program):
+        program.run()
+        return program.last_snd
 
 if __name__ == "__main__":
-    main()
+    Day(18).main()

@@ -1,8 +1,8 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- encoding:utf-8 -*-
 
 import threading
-import Queue
+import queue
 import day18
 
 class ConcurrentProgram(day18.Program):
@@ -30,7 +30,7 @@ class ConcurrentProgram(day18.Program):
             while not done:
                 try:
                     in_val = self._queue_in.get(timeout = 0.1)
-                except Queue.Empty:
+                except queue.Empty:
                     self._self_waiting.set()
                     if self._other_waiting.is_set():
                         raise day18.EndProgram
@@ -47,34 +47,42 @@ class ConcurrentProgram(day18.Program):
     def join(self):
         self._thread.join()
 
-count = 0
-def on_send():
-    global count
-    count += 1
 
-def on_send_nop():
-    pass
+class Day(day18.Day):
+    def __init__(self, *args, **kwargs):
+        super(Day, self).__init__(*args, **kwargs)
+        self.count = 0
+        
+    def on_send(self):
+        self.count += 1
 
-def run(input):
-    input_lists = day18.to_lists(input)
+    def on_send_nop(self):
+        pass
 
-    prog0_to_prog1_queue = Queue.Queue()
-    prog1_to_prog0_queue = Queue.Queue()
+    def parse(self, input):
+        input_lists = day18.to_lists(input)
 
-    prog0_hang_event = threading.Event()
-    prog1_hang_event = threading.Event()
+        prog0_to_prog1_queue = queue.Queue()
+        prog1_to_prog0_queue = queue.Queue()
 
-    program0 = ConcurrentProgram(input_lists, 0, prog0_to_prog1_queue, prog1_to_prog0_queue, prog0_hang_event, prog1_hang_event, on_send_nop)
-    program1 = ConcurrentProgram(input_lists, 1, prog1_to_prog0_queue, prog0_to_prog1_queue, prog1_hang_event, prog0_hang_event, on_send)
+        prog0_hang_event = threading.Event()
+        prog1_hang_event = threading.Event()
 
-    program0.run_thread()
-    program1.run_thread()
+        program0 = ConcurrentProgram(input_lists, 0, prog0_to_prog1_queue, prog1_to_prog0_queue, prog0_hang_event, prog1_hang_event, self.on_send_nop)
+        program1 = ConcurrentProgram(input_lists, 1, prog1_to_prog0_queue, prog0_to_prog1_queue, prog1_hang_event, prog0_hang_event, self.on_send)
+        
+        return program0,program1
 
-    program0.join()
-    program1.join()
+    def run(self, programs):
+        program0,program1 = programs
 
-    return count
-day18.run = run
+        program0.run_thread()
+        program1.run_thread()
+
+        program0.join()
+        program1.join()
+
+        return self.count
 
 if __name__ == '__main__':
-    day18.main()
+    Day(18).main()
