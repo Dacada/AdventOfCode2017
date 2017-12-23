@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- encoding:utf-8 -*-
 
 import day10_2
@@ -65,20 +65,20 @@ class Memory(object):
 
         return count
 
-def run(input):
-    bits = []
+class Day(day14.Day):
+    def run(self, input):
+        day = day10_2.Day(14)
+        bits = []
     
-    for i in range(128):
-        hash_input = input + '-' + str(i)
-        hash = day10_2.run(hash_input)
-        bits.append([b for b in bin(int('1'+hash,16))[3:]])
-        day10_2.day10.list = range(256)
+        for i in range(128):
+            hash_input = input + '-' + str(i)
+            hash = day.run(day.parse(hash_input))
+            bits.append([b for b in bin(int('1'+hash,16))[3:]])
+            day.list = [__ for __ in range(256)]
         
-    memory = Memory(bits)
-    memory.link_up()
-    return memory.count_regions()
-
-day14.run = run
+        memory = Memory(bits)
+        memory.link_up()
+        return memory.count_regions()
 
 if __name__ == '__main__':
-    day14.main()
+    Day(14).main()

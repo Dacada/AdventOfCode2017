@@ -1,10 +1,9 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- encoding:utf-8 -*-
 
 import sys
+import base
 import day7
-
-input = open('input12.txt').read()
 
 class Program(object):
     def __init__(self, name):
@@ -28,40 +27,32 @@ class Program(object):
                         return True
             return False
 
-def parse(input):
-    result = {}
+class Day(base.Base):
+    def parse(self, input):
+        input = input.strip()
+        result = {}
     
-    for line in input.split('\n'):
-        tokens = line.split()
-        program = int(tokens[0])
-        connections = [int(day7.remove_char(t,',')) for t in tokens[2:]]
-        result[program] = (Program(program), connections)
+        for line in input.split('\n'):
+            tokens = line.split()
+            program = int(tokens[0])
+            connections = [int(day7.remove_char(t,',')) for t in tokens[2:]]
+            result[program] = (Program(program), connections)
         
-    for program,connections in result.values():
-        for connection in connections:
-            program.add_connection(result[connection][0])
+        for program,connections in result.values():
+            for connection in connections:
+                program.add_connection(result[connection][0])
 
-    for program in result:
-        result[program] = result[program][0]
+        for program in result:
+            result[program] = result[program][0]
 
-    return result
+        return result
 
-def run(input):
-    programs = parse(input.strip())
-    count = 0
-    for program in programs.values():
-        if program.connects_to(0):
-            count += 1
-    return count
-
-def main():
-    sys.stdout.write("> ")
-    new_input = sys.stdin.read()
-    
-    if new_input:
-        print run(new_input)
-    else:
-        print run(input)
+    def run(self, programs):
+        count = 0
+        for program in programs.values():
+            if program.connects_to(0):
+                count += 1
+        return count
 
 if __name__ == '__main__':
-    main()
+    Day(12).main()
